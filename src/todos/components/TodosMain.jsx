@@ -1,4 +1,4 @@
-import { TodosList } from "./TodosList";
+import { TodosList } from './TodosList';
 
 export function TodosMain() {
   return (
