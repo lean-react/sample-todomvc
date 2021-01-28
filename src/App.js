@@ -1,9 +1,13 @@
 import { TodosShell } from './todos/components/TodosShell';
+import { Provider } from 'react-redux';
+import store from './todos/store';
 
 function App() {
   return (
     <>
-      <TodosShell />
+      <Provider store={store}>
+        <TodosShell />
+      </Provider>
       <footer className="info">
         <p>Double-click to edit a todo</p>
         <p>
