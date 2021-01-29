@@ -3,15 +3,24 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { TodosShell } from './TodosShell';
 
-import store from '../store';
+// Notwendig, weil ich das Backend mocke, also keine reellen Todos erzeugt werden
+// Alternative Lösungen:
+// 1. Testen mit dem original Store und dem reellen Backend (geht, weil Backend nur localStorage)
+// 2. Testen mit dem original Store und Backend stubben
+
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import * as actions from '../store/todos';
 
 // Mock backend (eigentlich nur wichtig, falls XHR o.ä. im Spiel ist)
-jest.mock('../api/local-backend');
+// jest.mock('../api/local-backend');
 
 describe('TodosShell component', () => {
 
   it('dispatches async createTodo action', () => {
+
+    const store = configureStore([thunk])({ todos: { items: [] }});
 
     jest.spyOn(actions, 'createTodo');
 
