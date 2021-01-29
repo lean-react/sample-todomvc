@@ -42,9 +42,11 @@ async function destroy(id) {
   return id;
 }
 
-export default {
+const api = {
   getAll,
   create,
   update,
   destroy,
 };
+
+export default api;
