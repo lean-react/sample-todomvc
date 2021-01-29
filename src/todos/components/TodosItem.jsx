@@ -1,4 +1,4 @@
-export function TodosItem() {
+export function TodosItem({ todo }) {
   return (
     <li className="completed">
       <div className="view">

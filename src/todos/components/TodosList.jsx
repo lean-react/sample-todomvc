@@ -6,7 +6,7 @@ export function TodosList() {
 
   return (
     <ul className="todo-list">
-      { todos.map(t => (<TodosItem key={t.id} />))}
+      { todos.map(t => (<TodosItem key={t.id} todo={t} />))}
     </ul>
   );
 }

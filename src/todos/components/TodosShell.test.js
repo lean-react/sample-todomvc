@@ -18,9 +18,13 @@ import * as actions from '../store/todos';
 
 describe('TodosShell component', () => {
 
-  it('dispatches async createTodo action', () => {
+  let store;
 
-    const store = configureStore([thunk])({ todos: { items: [] }});
+  beforeEach(() => {
+    store = configureStore([thunk])({ todos: { items: [] }});
+  });
+
+  it('dispatches async createTodo action', () => {
 
     jest.spyOn(actions, 'createTodo');
 
@@ -37,5 +41,18 @@ describe('TodosShell component', () => {
 
     expect(actions.createTodo).toHaveBeenCalled();
 
+  });
+
+  it('loads initially the todos from backend', () => {
+
+    jest.spyOn(actions, 'loadTodos');
+
+    render(
+      <Provider store={store}>
+        <TodosShell />
+      </Provider>
+    );
+
+    expect(actions.loadTodos).toHaveBeenCalled();
   });
 });
