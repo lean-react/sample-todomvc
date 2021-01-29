@@ -8,7 +8,7 @@ export function TodosItem({ todo }) {
   const dispatch = useDispatch();
 
   const [editMode, setEditMode] = useState(false);
-  const [title, setTitle] = useState(todo.title);
+  const [editTitle, setEditTitle] = useState(todo.title);
 
   function beginEdit() {
     setEditMode(true);
@@ -16,12 +16,12 @@ export function TodosItem({ todo }) {
 
   function cancelEdit() {
     setEditMode(false);
-    setTitle(todo.title);
+    setEditTitle(todo.title);
   }
 
   function commitEdit() {
     if (editMode) {
-      setTitle(title.trim());
+      const title = editTitle.trim();
       if (title) {
         dispatch(updateTodoTitle({id: todo.id, title}));
       } else {
@@ -61,8 +61,8 @@ export function TodosItem({ todo }) {
       { editMode ?
         <input className="edit"
                autoFocus={true}
-               value={title}
-               onChange={(ev) => setTitle(ev.target.value)}
+               value={editTitle}
+               onChange={(ev) => setEditTitle(ev.target.value)}
                onBlur={handleBlur}
                onKeyUp={handleKey}
         />
