@@ -1,13 +1,21 @@
+import { useDispatch } from 'react-redux';
+import { createTodo } from '../store/todos';
 import { TodosActionbar } from './TodosActionbar';
 import { TodosInput } from './TodosInput';
 import { TodosMain } from './TodosMain';
 
 export function TodosShell() {
+  const dispatch = useDispatch();
+
+  function handleOnCreateTodo(title) {
+    dispatch(createTodo(title));
+  }
+
   return (
     <section className="todoapp">
       <header className="header">
         <h1>todos</h1>
-        <TodosInput />
+        <TodosInput onCreateTodo={handleOnCreateTodo} />
       </header>
       <TodosMain />
       <TodosActionbar />
