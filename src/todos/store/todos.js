@@ -25,6 +25,18 @@ export const destroyTodo = createAsyncThunk( 'todos/destroyTodo',
   ({ id }) => api.destroy(id)
 );
 
+export const syncAllCompletedStates = createAsyncThunk( 'todos/syncAllCompletedStates',
+  async ({ completed }, thunkAPI) => {
+    // Filter all items needing an update ...
+    const todosToUpdate = thunkAPI.getState().todos.items.filter(t => t.completed !== completed);
+    // ... and map to update promises
+    await Promise.all( todosToUpdate.map(t => api.update(t.id, { completed })));
+    // Result of the promises is an array of updated todos - with all completed states set to completed.
+    // So I will symplify the payload just to the requested completed state.
+    return completed;
+  }
+);
+
 const todosSlice = createSlice({
   name: 'todos',
   initialState: {
@@ -50,6 +62,10 @@ const todosSlice = createSlice({
     [destroyTodo.fulfilled]: (state, action) => {
       const deletedId = action.payload;
       state.items = state.items.filter(t => t.id !== deletedId);
+    },
+    [syncAllCompletedStates.fulfilled]: (state, action) => {
+      const newCompletedState = action.payload;
+      state.items.forEach(t => {t.completed = newCompletedState; });
     }
   }
 });
