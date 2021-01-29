@@ -6,7 +6,7 @@ export const loadTodos = createAsyncThunk( 'todos/load',
 );
 
 export const createTodo = createAsyncThunk( 'todos/createTodo',
-  (title) => api.create(title)
+  ({ title }) => api.create(title)
 );
 
 export const toggleTodoCompletedState = createAsyncThunk( 'todos/setCompleted',

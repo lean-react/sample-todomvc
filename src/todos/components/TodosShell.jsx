@@ -13,7 +13,7 @@ export function TodosShell() {
   }, [dispatch]);
 
   function handleOnCreateTodo(title) {
-    dispatch(createTodo(title));
+    dispatch(createTodo({title}));
   }
 
   return (
