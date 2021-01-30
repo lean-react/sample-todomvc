@@ -37,10 +37,11 @@ describe('TodosShell component', () => {
     const header = screen.getByRole('banner');
     const inputFld = within(header).getByRole('textbox');
 
-    userEvent.type(inputFld, 'Testing async dispatch{enter}');
+    const title = 'Testing async dispatch';
+    userEvent.type(inputFld, `${title}{enter}`);
 
     expect(actions.createTodo).toHaveBeenCalled();
-
+    expect(actions.createTodo).toHaveBeenCalledWith({title});
   });
 
   it('loads initially the todos from backend', () => {

@@ -14,7 +14,7 @@ describe('Todos Slice', () => {
 
   test('createTodo action makes an api call', () => {
     const title = 'Test an async thunk action';
-    store.dispatch(createTodo(title));
+    store.dispatch(createTodo({title}));
     expect(api.create).toHaveBeenCalledWith(title);
   });
 
