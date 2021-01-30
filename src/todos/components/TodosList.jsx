@@ -1,15 +1,8 @@
-import { useSelector } from 'react-redux';
 import { TodosItem } from './TodosItem';
-import { Filter } from '../model/filter';
+import { useFilteredTodos } from '../store';
 
 export function TodosList() {
-  const todos = useSelector(s => {
-    switch (s.visibility.filter) {
-      case Filter.active: return s.todos.items.filter(t => !t.completed);
-      case Filter.completed: return s.todos.items.filter(t => t.completed);
-      default: return s.todos.items;
-    }
-  });
+  const todos = useFilteredTodos();
 
   return (
     <ul className="todo-list">

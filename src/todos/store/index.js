@@ -13,5 +13,6 @@ const store = configureStore({
 export * from './todos';
 export * from './visibility';
 export * from './selectors';
+export * from './hooks';
 
 export default store;
