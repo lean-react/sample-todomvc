@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import api from '../api/local-backend';
-import { useSelector } from 'react-redux';
 
 export const loadTodos = createAsyncThunk( 'todos/load',
   () => api.getAll()
@@ -38,6 +37,14 @@ export const syncAllCompletedStates = createAsyncThunk( 'todos/syncAllCompletedS
   }
 );
 
+export const destroyAllCompletedTodos = createAsyncThunk( 'todos/destroyCompleted',
+  async (arg, thunkAPI) => {
+    // map completed todos to destroy promises
+    const todosToDestroy = thunkAPI.getState().todos.items.filter(t => t.completed);
+    return await Promise.all( todosToDestroy.map(t => api.destroy(t.id)));
+  }
+);
+
 const todosSlice = createSlice({
   name: 'todos',
   initialState: {
@@ -67,6 +74,9 @@ const todosSlice = createSlice({
     [syncAllCompletedStates.fulfilled]: (state, action) => {
       const newCompletedState = action.payload;
       state.items.forEach(t => {t.completed = newCompletedState; });
+    },
+    [destroyAllCompletedTodos.fulfilled]: (state) => {
+      state.items = state.items.filter(t => !t.completed);
     }
   }
 });
@@ -75,9 +85,13 @@ export const getTodos = s => s.todos.items;
 
 // Memoized selectors
 export const allCompletedSelector = createSelector(
-  getTodos, todos => todos.findIndex(t => !t.completed) === -1);
+  getTodos, todos => todos.findIndex(t => !t.completed) === -1
+);
 export const hasTodosSelector = createSelector(
   getTodos, todos => todos.length > 0
+);
+export const hasCompletedTodosSelector = createSelector(
+  getTodos, todos => todos.findIndex(t => t.completed) !== -1
 );
 export const activeCountSelector = createSelector(
   getTodos, todos => todos.reduce((count, t) => t.completed ? count : count + 1, 0)

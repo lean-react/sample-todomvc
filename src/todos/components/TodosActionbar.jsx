@@ -1,9 +1,20 @@
-import { useSelector } from 'react-redux';
-import { activeCountSelector, hasTodosSelector } from '../store/todos';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  activeCountSelector,
+  destroyAllCompletedTodos,
+  hasCompletedTodosSelector,
+  hasTodosSelector
+} from '../store/todos';
 
 export function TodosActionbar() {
   const hasTodos = useSelector(hasTodosSelector);
+  const hasCompletedTodos = useSelector(hasCompletedTodosSelector);
   const activeCount = useSelector(activeCountSelector);
+  const dispatch = useDispatch();
+
+  function handleClearCompleted() {
+    dispatch(destroyAllCompletedTodos());
+  }
 
   if (!hasTodos) {
     return null;
@@ -29,8 +40,9 @@ export function TodosActionbar() {
           <a href="#/completed">Completed</a>
         </li>
       </ul>
-      {/* <!-- Hidden if no completed items are left ↓ --> */}
-      <button className="clear-completed">Clear completed</button>
+      { hasCompletedTodos &&
+        <button onClick={handleClearCompleted} className="clear-completed">Clear completed</button> }
+
     </footer>
   );
 }
