@@ -4,6 +4,8 @@ import { createTodo, loadTodos } from '../store/todos';
 import { TodosActionbar } from './TodosActionbar';
 import { TodosInput } from './TodosInput';
 import { TodosMain } from './TodosMain';
+import { setVisibility } from '../store/visibility';
+import { Filter } from '../model/filter';
 
 export function TodosShell() {
   const dispatch = useDispatch();
@@ -15,6 +17,32 @@ export function TodosShell() {
   function handleOnCreateTodo(title) {
     dispatch(createTodo({title}));
   }
+
+  // Routing
+  useEffect(() => {
+
+    const hashListener =  () => {
+      switch (window.location.hash) {
+        case '#/active':
+          dispatch(setVisibility(Filter.active));
+          break;
+        case '#/completed':
+          dispatch(setVisibility(Filter.completed));
+          break;
+        default:
+          window.location.hash = '#/';
+          dispatch(setVisibility(Filter.all));
+          break;
+      }
+    }
+
+    // Initial routing
+    hashListener();
+
+    window.addEventListener('hashchange', hashListener);
+    return () => { window.removeEventListener('hashchange', hashListener) };
+
+  }, [dispatch]);
 
   return (
     <section className="todoapp">

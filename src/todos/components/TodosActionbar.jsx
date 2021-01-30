@@ -5,12 +5,15 @@ import {
   hasCompletedTodosSelector,
   hasTodosSelector
 } from '../store/todos';
+import { getVisibility } from '../store';
+import { Filter } from '../model/filter';
 
 export function TodosActionbar() {
   const hasTodos = useSelector(hasTodosSelector);
   const hasCompletedTodos = useSelector(hasCompletedTodosSelector);
   const activeCount = useSelector(activeCountSelector);
   const dispatch = useDispatch();
+  const visibility = useSelector(getVisibility);
 
   function handleClearCompleted() {
     dispatch(destroyAllCompletedTodos());
@@ -29,15 +32,13 @@ export function TodosActionbar() {
       {/* <!-- Remove this if you don't implement routing --> */}
       <ul className="filters">
         <li>
-          <a className="selected" href="#/">
-            All
-          </a>
+          <a className={visibility === Filter.all ? 'selected' : '' } href="#/">All</a>
         </li>
         <li>
-          <a href="#/active">Active</a>
+          <a className={visibility === Filter.active ? 'selected' : '' } href="#/active">Active</a>
         </li>
         <li>
-          <a href="#/completed">Completed</a>
+          <a className={visibility === Filter.completed ? 'selected' : '' } href="#/completed">Completed</a>
         </li>
       </ul>
       { hasCompletedTodos &&
