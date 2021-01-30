@@ -1,12 +1,12 @@
 import { TodosList } from './TodosList';
 import { useDispatch, useSelector } from 'react-redux';
-import { syncAllCompletedStates } from '../store/todos';
+import { allCompletedSelector, syncAllCompletedStates } from '../store/todos';
 
 export function TodosMain() {
   const dispatch = useDispatch();
-  const allCompleted = useSelector(s => s.todos.items.findIndex(t => !t.completed) === -1);
+  const allCompleted = useSelector(allCompletedSelector);
 
-  function handleToggleAll() {
+  const handleToggleAll = () => {
     dispatch(syncAllCompletedStates({completed: !allCompleted}));
   }
 
