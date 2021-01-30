@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { destroyTodo, toggleTodoCompletedState, updateTodoTitle } from '../store/todos';
+import { destroyTodo, toggleTodoCompletedState, updateTodoTitle } from '../store';
 
 export function TodosItem({ todo }) {
 

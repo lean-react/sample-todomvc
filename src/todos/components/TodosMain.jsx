@@ -1,6 +1,6 @@
 import { TodosList } from './TodosList';
 import { useDispatch, useSelector } from 'react-redux';
-import { allCompletedSelector, hasTodosSelector, syncAllCompletedStates } from '../store/todos';
+import { allCompletedSelector, hasTodosSelector, syncAllCompletedStates } from '../store';
 
 export function TodosMain() {
   const dispatch = useDispatch();

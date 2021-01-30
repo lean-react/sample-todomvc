@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   activeCountSelector,
   destroyAllCompletedTodos,
+  getVisibility,
   hasCompletedTodosSelector,
   hasTodosSelector
-} from '../store/todos';
-import { getVisibility } from '../store';
+} from '../store';
 import { Filter } from '../model/filter';
 
 export function TodosActionbar() {

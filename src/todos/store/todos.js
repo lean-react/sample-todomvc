@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../api/local-backend';
 
 export const loadTodos = createAsyncThunk( 'todos/load',
@@ -80,21 +80,5 @@ const todosSlice = createSlice({
     }
   }
 });
-
-export const getTodos = s => s.todos.items;
-
-// Memoized selectors
-export const allCompletedSelector = createSelector(
-  getTodos, todos => todos.findIndex(t => !t.completed) === -1
-);
-export const hasTodosSelector = createSelector(
-  getTodos, todos => todos.length > 0
-);
-export const hasCompletedTodosSelector = createSelector(
-  getTodos, todos => todos.findIndex(t => t.completed) !== -1
-);
-export const activeCountSelector = createSelector(
-  getTodos, todos => todos.reduce((count, t) => t.completed ? count : count + 1, 0)
-);
 
 export default todosSlice.reducer;

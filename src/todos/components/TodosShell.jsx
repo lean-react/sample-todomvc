@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { createTodo, loadTodos } from '../store/todos';
+import { createTodo, loadTodos, setVisibility } from '../store';
 import { TodosActionbar } from './TodosActionbar';
 import { TodosInput } from './TodosInput';
 import { TodosMain } from './TodosMain';
-import { setVisibility } from '../store/visibility';
 import { Filter } from '../model/filter';
 
 export function TodosShell() {
